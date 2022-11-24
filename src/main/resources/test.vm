@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Title</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/sticky-footer-navbar.css" rel="stylesheet">
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+    <script src="https://cytoscape.org/cytoscape.js-cxtmenu/cytoscape-cxtmenu.js"></script>
+
+     <style type="text/css">
+        #mynetwork {
+            width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+        #owlClassChooser {
+          background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+          background-position: 10px 12px; /* Position the search icon */
+          background-repeat: no-repeat; /* Do not repeat the icon image */
+          width: 100%; /* Full-width */
+          font-size: 16px; /* Increase font-size */
+          padding: 12px 20px 12px 40px; /* Add some padding */
+          border: 1px solid #ddd; /* Add a grey border */
+          margin-bottom: 12px; /* Add some space below the input */
+        }
+
+    #ulForOwlClasses {
+      /* Remove default list styling */
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #ulForOwlClasses li a {
+      border: 1px solid #ddd; /* Add a border to all links */
+      margin-top: -1px; /* Prevent double borders */
+      background-color: #f6f6f6; /* Grey background color */
+      padding: 12px; /* Add some padding */
+      text-decoration: none; /* Remove default text underline */
+      font-size: 18px; /* Increase the font-size */
+      color: black; /* Add a black text color */
+      display: block; /* Make it into a block element to fill the whole list */
+    }
+
+    #ulForOwlClasses li a:hover:not(.header) {
+      background-color: #eee; /* Add a hover effect to all links, except for headers */
+    }
+    </style>
+    <style>
+      #cy {
+          width: 90%;
+          height: 500px;
+          position: relative;
+          top: 0px;
+          left: 0px;
+          border: 2px solid;
+          padding: 20px; 
+          resize: both;
+          overflow: auto;
+      }
+  </style>
+  </head>
+
+  <body data-new-gr-c-s-check-loaded="14.1068.0" data-gr-ext-installed="">
+
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/#">Fixed navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/test">Test <span class="sr-only">(current)</span></a>
+            </li>
+          </ul>
+          
+        </div>
+      </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+      <h1 class="mt-5">A few steps ahead...</h1>
+      <p class="lead">1.Choose an ontology to start</p>
+      <p>+> $uuid</p>
+       <!-- 1. Choose ontology -->
+      <form onkeydown="return event.key != 'Enter';">
+        <div class="form-group">
+          <input type="text" id="ontURL" class="form-control" aria-describedby="ontology url" placeholder="Enter an ontology url">
+          <small id="ontUrlText" class="form-text text-muted">Ontology URL.</small>
+        </div>
+        <button id="submitOntURL" type="button" class="btn btn-primary">Select</button>
+        <script type="text/javascript">
+          document.getElementById("submitOntURL").addEventListener("click", getAsyncOntology);
+          function getAsyncOntology() {
+            var ontUrl = document.getElementById("ontURL").value;
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() { 
+              if (xmlHttp.readyState == 4 && xmlHttp.status > 200 && xmlHttp.status < 300){
+                
+                document.getElementById("ontUrlText").innerHTML = "Success!";
+                document.getElementById("ontUrlText").style.color = 'green';
+                var ontClasses = JSON.parse(xmlHttp.responseText).classes;
+                var ul = document.getElementById("ulForOwlClasses");
+                for(var i = 0; i < ontClasses.length; i++) {
+                  var ontClass = ontClasses[i];
+                  var liClass = document.createElement('li');
+                  liClass.classList.add('list-group-item'); 
+                  liClass.appendChild(document.createTextNode(ontClass));
+                  liClass.onclick = function() { 
+                    clearLIsStyle();
+                    this.style.cssText = "border: solid green;border-radius: 25px;";
+                    // ONPROGRESS:
+                    cy.add({data: { id: this.innerText}});
+
+
+                  };
+                  ul.appendChild(liClass);
+                }
+                
+              }else if(xmlHttp.readyState == 4){
+                console.log(xmlHttp.responseText);
+                var responseBody = JSON.parse(xmlHttp.responseText);
+                document.getElementById("ontUrlText").innerHTML = responseBody.error;
+                document.getElementById("ontUrlText").style.color = 'red';
+
+              }     
+          }
+              xmlHttp.open("GET", "/api/ontology?url="+ontUrl, true); // true for asynchronous 
+              xmlHttp.send(null);
+          }
+          function clearLIsStyle(){
+            var ul = document.getElementById("ulForOwlClasses");
+            var lis = ul.getElementsByTagName("li");
+            for(var i = 0; i < lis.length; i++) {
+              var li = lis[i];
+              li.style.cssText = "";
+            }
+          }
+        </script>
+      </form>
+      <!-- 2. Choose root -->
+      <div id="2ndStep">
+        <p class="lead">2.Choose a class to be the root of the JSON-LD 1.1 -</p>
+        <form onkeydown="return event.key != 'Enter';">
+        <div class="form-group">
+          <input type="text" id="owlClassChooser" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name" style="">
+       
+          <ul class="list-group" id="ulForOwlClasses" style=" max-height: 200px; margin-bottom: 10px;overflow:scroll;-webkit-overflow-scrolling: touch; border-style: inset">
+          </ul>
+            <script>
+              
+              // filtering function
+              function myFunction() {
+                  var input, filter, ul, li, a, i, txtValue;
+                  input = document.getElementById("owlClassChooser");
+                  filter = input.value.toUpperCase();
+                  ul = document.getElementById("ulForOwlClasses");
+                  li = ul.getElementsByTagName("li");
+                  
+                  for (i = 0; i < li.length; i++) {
+                      a = li[i];
+                      txtValue = a.textContent || a.innerText;
+                      console.log(txtValue);
+                      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                          li[i].style.display = "";
+                      } else {
+                          li[i].style.display = "none";
+                      }
+                  }
+              }
+            </script>
+            <small id="ontClassMsg" class="form-text text-muted">Click on a owl:Class for choosing it.</small>
+           
+           
+
+        </div>
+        </form>
+      </div>
+       <!-- 3. Choose adjacent nodes -->
+      <div id="3rdStep">
+        <p class="lead">3.Choose owl:Classes to include.</p>
+        <div id="cy"></div>
+        <script>
+
+          var cy = cytoscape({
+            container: document.getElementById('cy'),
+            elements: [],
+            style: [
+              {
+                selector: 'node',
+                css: {
+                  width: 50,
+                  height: 50,
+                  'background-color':'#61bffc',
+                  content: 'data(id)'
+                }
+                
+              }
+            ],
+            layout: {
+              name: 'breadthfirst',
+              directed: true,
+              padding: 10,
+             /* color: "#ffff00",*/
+              fit: true
+            }
+          });
+          cy.cxtmenu({
+          selector: 'node, edge',
+
+          commands: [
+            {
+              content: '<span class="fa fa-flash fa-2x"></span>',
+              select: function(ele){
+                console.log( ele.id() );
+              }
+            },
+
+            {
+              content: '<span class="fa fa-star fa-2x"></span>',
+              select: function(ele){
+                console.log( ele.data('name') );
+              },
+              enabled: false
+            },
+
+            {
+              content: 'Text',
+              select: function(ele){
+                console.log( ele.position() );
+              }
+            }
+          ]
+        });
+
+        cy.cxtmenu({
+          selector: 'core',
+
+          commands: [
+            {
+              content: 'bg1',
+              select: function(){
+                console.log( 'bg1' );
+              }
+            },
+
+            {
+              content: 'bg2',
+              select: function(){
+                console.log( 'bg2' );
+              }
+            }
+          ]
+        });
+        </script>
+      </div>
+    </main>
+
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    
+    
+
+</body></html>
