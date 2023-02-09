@@ -1,0 +1,14 @@
+<tr>
+    <td class="fw-semibold">
+        <h3 style="margin-block-end: 0em;">$ontology-name</h3>
+        <a href="$ontology-url" target="_blank">$ontology-url</a>
+    </td>
+
+    <td class="text-center">
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-alt-secondary js-bs-tooltip-enabled" data-bs-toggle="tooltip" aria-label="Delete" data-bs-original-title="Delete">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </td>
+</tr>

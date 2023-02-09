@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/ -->
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Context builder</title>
+        <link rel="stylesheet" id="css-main" href="/css/dashmix.css">
+    </head>
+
+    <body>
+    <div id="page-container" class="sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow side-trans-enabled">
+
+        <nav id="sidebar" aria-label="Main Navigation">
+            <!-- Side Header -->
+            <div class="bg-header-dark">
+                <div class="content-header bg-white-5">
+                    <!-- Logo -->
+                    <a class="fw-semibold text-white tracking-wide" href="index.html">
+                        Opciones
+                    </a>
+                    <!-- END Logo -->
+
+                    <!-- Options -->
+                    <div>
+                        <!-- Close Sidebar, Visible only on mobile screens -->
+                        <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                        <button type="button" class="btn btn-sm btn-alt-secondary d-lg-none" data-toggle="layout" data-action="sidebar_close">
+                            <i class="fa fa-times-circle"></i>
+                        </button>
+                        <!-- END Close Sidebar -->
+                    </div>
+                    <!-- END Options -->
+                </div>
+            </div>
+            <!-- END Side Header -->
+
+            <!-- Sidebar Scrolling -->
+            <div class="js-sidebar-scroll">
+                <!-- Side Navigation -->
+
+                <!-- END Side Navigation -->
+            </div>
+            <!-- END Sidebar Scrolling -->
+        </nav>
+        <!-- END Sidebar -->
+
+        <!-- Header -->
+        <header id="page-header">
+            <!-- Header Content -->
+            <div class="content-header">
+                <!-- Left Section -->
+                <div class="space-x-1">
+                    <!-- Toggle Sidebar -->
+                    <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
+                    <button type="button" class="btn btn-alt-secondary" data-toggle="layout" data-action="sidebar_toggle">
+                        <i class="fa fa-fw fa-bars"></i>
+                    </button>
+                    <!-- END Toggle Sidebar -->
+
+                    <!-- Dark Mode -->
+                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                    <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="class-toggle" data-target="#dark-mode-toggler" data-class="far fa" onclick="Dashmix.layout('dark_mode_toggle');">
+                        <i class="far fa-moon" id="dark-mode-toggler"></i>
+                    </button>
+                    <!-- END Dark Mode -->
+
+                </div>
+                <!-- END Left Section -->
+
+            </div>
+            <!-- END Header Content -->
+
+        </header>
+        <!-- END Header -->
+
+        <!-- Main Container -->
+        <main id="main-container">
+            <!-- Hero -->
+            <div class="bg-body-light">
+                <div class="content content-full">
+                    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
+                        <h1 class="flex-grow-1 fs-3 fw-semibold my-2 my-sm-3">JSONLD Context builder</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- END Hero -->
+
+            <!-- Page Content -->
+            <div class="content">
+
+                <h2 class="content-heading">Block Tabs</h2>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <!-- Block Tabs Default Style -->
+                        <div class="block block-rounded">
+                            <ul class="nav nav-tabs nav-tabs-block" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="btabs-static-home-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-home" role="tab" aria-controls="btabs-static-home" aria-selected="true">Sources</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="btabs-static-profile-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-profile" role="tab" aria-controls="btabs-static-profile" aria-selected="false" tabindex="-1">Root</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="btabs-static-links-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-links" role="tab" aria-controls="btabs-static-links" aria-selected="false" tabindex="-1">Edges</button>
+                                </li>
+                                <li class="nav-item ms-auto" role="presentation">
+                                    <button class="nav-link" id="btabs-static-settings-tab" data-bs-toggle="tab" data-bs-target="#btabs-static-settings" role="tab" aria-controls="btabs-static-settings" aria-selected="false" tabindex="-1">
+                                        <i class="si si-settings"></i>
+                                        <span class="visually-hidden">Settings</span>
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="block-content tab-content">
+                                <div class="tab-pane active show" id="btabs-static-home" role="tabpanel" aria-labelledby="btabs-static-home-tab" tabindex="0">
+                                    <div class="col-sm-12 col-xl-12">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-block-vcenter">Añadir ontologías</button>
+                                        <div class="block-content">
+                                            <table class="table table-hover table-vcenter">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th class="text-center" style="width: 100px;">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="btabs-static-profile" role="tabpanel" aria-labelledby="btabs-static-profile-tab" tabindex="0">
+                                    <h4 class="fw-normal">Elegimos la raíz</h4>
+                                    <button type="button" id="getClassesButton" class="btn btn-info me-1 mb-3">
+                                        <i class="si si-refresh"></i>
+                                        Refresh
+                                    </button>
+                                    <button type="button" id="getClassesButton" class="btn btn-primary me-1 mb-3">
+                                        Select
+                                    </button>
+                                    <div class="block-content block-content-full">
+                                        <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
+                                        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
+                                            <div class="row dt-row">
+                                                <div class="col-sm-12">
+                                                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <script type="text/javascript">
+                                        document.getElementById("getClassesButton").addEventListener("click", getAsyncOntology);
+
+                                        function getAsyncOntology() {
+                                            var xmlHttp = new XMLHttpRequest();
+                                            xmlHttp.onreadystatechange = function() {
+                                                if (xmlHttp.readyState == 4 && xmlHttp.status >= 200 && xmlHttp.status < 300){
+                                                    divtable = document.getElementById('DataTables_Table_0_wrapper');
+                                                    divtable.insertAdjacentHTML('beforeend', xmlHttp.responseText);
+                                                }
+                                            }
+                                            xmlHttp.open("GET", "/api/ontology/classes", true);
+                                            xmlHttp.send(null);
+                                        }
+
+                                    </script>
+                                </div>
+
+
+                                <div class="tab-pane" id="btabs-static-links" role="tabpanel" aria-labelledby="btabs-static-profile-tab" tabindex="0">
+                                    <h4 class="fw-normal">Elegimos</h4>
+                                    <p>...</p>
+                                </div>
+
+
+                                <div class="tab-pane" id="btabs-static-settings" role="tabpanel" aria-labelledby="btabs-static-settings-tab" tabindex="0">
+                                    <h4 class="fw-normal">Settings Content</h4>
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Block Tabs Default Style -->
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Block Tabs Default Style (Right) -->
+                        <div class="block block-rounded">
+                            <ul class="nav nav-tabs nav-tabs-block justify-content-end" role="tablist">
+                                <li class="nav-item me-auto" role="presentation">
+                                    <button class="nav-link" id="btabs-static2-settings-tab" data-bs-toggle="tab" data-bs-target="#btabs-static2-settings" role="tab" aria-controls="btabs-static2-settings" aria-selected="false" tabindex="-1">
+                                        <i class="si si-settings"></i>
+                                        <span class="visually-hidden">Settings</span>
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="btabs-static2-profile-tab" data-bs-toggle="tab" data-bs-target="#btabs-static2-profile" role="tab" aria-controls="btabs-static2-profile" aria-selected="false" tabindex="-1">Profile</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="btabs-static2-home-tab" data-bs-toggle="tab" data-bs-target="#btabs-static2-home" role="tab" aria-controls="btabs-static2-home" aria-selected="true">Home</button>
+                                </li>
+                            </ul>
+                            <div class="block-content tab-content">
+                                <div class="tab-pane active" id="btabs-static2-home" role="tabpanel" aria-labelledby="btabs-static2-home-tab" tabindex="0">
+                                    <h4 class="fw-normal">Home Content</h4>
+                                    <p>...</p>
+                                </div>
+                                <div class="tab-pane" id="btabs-static2-profile" role="tabpanel" aria-labelledby="btabs-static2-profile-tab" tabindex="0">
+                                    <h4 class="fw-normal">Profile Content</h4>
+                                    <p>...</p>
+                                </div>
+                                <div class="tab-pane" id="btabs-static2-settings" role="tabpanel" aria-labelledby="btabs-static2-settings-tab" tabindex="0">
+                                    <h4 class="fw-normal">Settings Content</h4>
+                                    <p>...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Block Tabs Default Style (Right) -->
+                    </div>
+                </div>
+
+                <div class="modal" id="modal-block-vcenter" tabindex="-1" aria-labelledby="modal-block-vcenter" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="block block-rounded block-themed block-transparent mb-0">
+                                <div class="block-header bg-primary-dark">
+                                    <h3 class="block-title">Modal Title</h3>
+                                    <div class="block-options">
+                                        <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                            <i class="fa fa-fw fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <br>
+                                <form class="w-100" action="/api/ontology" method="POST">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control border-0" placeholder="Paste your ontology's URL..." id="ontology-url" name="page-header-search-input">
+                                    </div>
+                                </form>
+                                <div class="block-content block-content-full text-end bg-body">
+                                    <button type="button" class="btn btn-sm btn-alt-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button id="submitOntURL" type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal">Done</button>
+                                </div>
+                                <script type="text/javascript">
+                                    document.getElementById("submitOntURL").addEventListener("click", getAsyncOntology);
+                                    function getAsyncOntology() {
+                                        var ontUrl = document.getElementById("ontology-url").value;
+                                        var xmlHttp = new XMLHttpRequest();
+                                        xmlHttp.onreadystatechange = function() {
+                                            console.log("=====");
+                                            if (xmlHttp.readyState == 4 && xmlHttp.status >= 200 && xmlHttp.status < 300){
+                                                console.log("**************");
+                                                divtable = document.getElementById('btabs-static-home');
+                                                table = divtable.getElementsByTagName('table');
+                                                tbodies = table[0].tBodies[0];
+                                                tbodies.insertAdjacentHTML('beforeend', xmlHttp.responseText);
+                                            }
+                                        }
+                                        xmlHttp.open("POST", "/api/ontology?url="+ontUrl, true); // true for asynchronous
+                                        xmlHttp.send(null);
+                                    }
+                                    function clearLIsStyle(){
+                                        var ul = document.getElementById("ulForOwlClasses");
+                                        var lis = ul.getElementsByTagName("li");
+                                        for(var i = 0; i < lis.length; i++) {
+                                            var li = lis[i];
+                                            li.style.cssText = "";
+                                        }
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- END Page Content -->
+
+
+
+        </main>
+        <!-- END Main Container -->
+
+        <!-- Footer -->
+        <footer id="page-footer" class="bg-body-light">
+            <div class="content py-0">
+                <div class="row fs-sm">
+                    <div class="col-sm-6 order-sm-2 mb-1 mb-sm-0 text-center text-sm-end">
+                        Made with <i class="fa fa-heart text-danger"></i>
+                    </div>
+                    <div class="col-sm-6 order-sm-1 text-center text-sm-start">
+                        <a class="fw-semibold" href="https://1.envato.market/r6y" target="_blank">Dashmix 5.5</a> &copy; <span data-toggle="year-copy"></span>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- END Footer -->
+    </div>
+    <!-- END Page Container -->
+
+    <!--
+      Dashmix JS
+
+      Core libraries and functionality
+      webpack is putting everything together at assets/_js/main/app.js
+    -->
+    <script src="/js/dashmix.app.min.js"></script>
+    <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/pages/be_tables_datatables.min.js"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="/js/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+    <script src="/js/plugins/datatables-buttons/dataTables.buttons.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-jszip/jszip.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js"></script>
+    <script src="/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js"></script>
+    <script src="/js/plugins/datatables-buttons/buttons.print.min.js"></script>
+    <script src="/js/plugins/datatables-buttons/buttons.html5.min.js"></script>
+
+    </body>
+
+</html>

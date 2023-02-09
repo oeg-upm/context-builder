@@ -20,9 +20,9 @@ public class Main2 {
 
 
 		Model graph = ModelFactory.createDefaultModel();
-		graph.add( ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Activity"), ResourceFactory.createProperty("https://auroral.iot.linkeddata.es/def/tourism#hasDifficulty"), ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Difficulty"));
+		//graph.add( ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Activity"), ResourceFactory.createProperty("https://auroral.iot.linkeddata.es/def/tourism#hasDifficulty"), ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#ActivityDifficulty"));
+		//graph.add( ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Activity"), ResourceFactory.createProperty("https://auroral.iot.linkeddata.es/def/tourism#hasStartingPrice"), ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Price"));
 		graph.add( ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Activity"), ResourceFactory.createProperty("https://auroral.iot.linkeddata.es/def/tourism#hasStartingPrice"), ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Price"));
-		graph.add( ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Price"), ResourceFactory.createProperty("https://auroral.iot.linkeddata.es/def/tourism#inCurrency"), ResourceFactory.createResource("https://auroral.iot.linkeddata.es/def/tourism#Currency"));
 
 
 		ContextBuilder builder = CBFactory.build(null);

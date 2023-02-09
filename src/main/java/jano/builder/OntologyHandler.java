@@ -33,9 +33,12 @@ public class OntologyHandler {
 	}
 
 
-
 	private void extractBase() {
 		Map<String, String> prefixes = model.getNsPrefixMap();
+		for (Map.Entry<String, String> entry : prefixes.entrySet()) {
+			System.out.println(entry.getKey() + ":" + entry.getValue());
+		}
+
 		if(prefixes.containsKey("")) {
 			base = prefixes.get("");
 		}
@@ -149,12 +152,17 @@ public class OntologyHandler {
             return firstMap;
          }).orElse(new HashMap<>());
 		dps.putAll(dps2);
+
+		for (Map.Entry<Resource, String> entry : dps.entrySet()) {
+			System.out.println(entry.getKey().toString() + " -----> " + entry.getValue());
+		}
+
 		return dps;
 	}
 
 	private static final String DATATYPE_PROPERTIES_QUERY_2 = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n prefix owl: <http://www.w3.org/2002/07/owl#> \n \n SELECT ?relationship ?type {  ?relationship a owl:DatatypeProperty . ?relationship rdfs:domain <%s> . OPTIONAL { ?relationship rdfs:range ?type . }}";
 
-	private static final String DATATYPE_PROPERTIES_QUERY_1 = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n prefix owl: <http://www.w3.org/2002/07/owl#> \n \n SELECT ?relationship ?type { <%s> rdfs:subClassOf ?b .\n  ?b a owl:Restriction .\n ?b owl:onProperty ?relationship .\n OPTIONAL { ?b owl:allValuesFrom ?type .} OPTIONAL { ?b owl:someValuesFrom ?type .}  \n ?relationship a owl:DatatypeProperty . }";
+	private static final String DATATYPE_PROPERTIES_QUERY_1 = "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n prefix owl: <http://www.w3.org/2002/07/owl#> \n \n SELECT ?relationship ?type { <%s> rdfs: ?b .\n  ?b a owl:Restriction .\n ?b owl:onProperty ?relationship .\n OPTIONAL { ?b owl:allValuesFrom ?type .} OPTIONAL { ?b owl:someValuesFrom ?type .}  \n ?relationship a owl:DatatypeProperty . }";
 	private static final String DATATYPE_PROPERTIES_QUERY_REPLACEMENT ="%s";
 	private static final String DATATYPE_PROPERTIES_QUERY_VAR1 ="?relationship";
 	private static final String DATATYPE_PROPERTIES_QUERY_VAR2 ="?type";

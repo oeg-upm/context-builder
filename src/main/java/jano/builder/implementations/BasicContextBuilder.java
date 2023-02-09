@@ -1,8 +1,10 @@
 package jano.builder.implementations;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.compress.utils.Lists;
 import org.apache.jena.ontology.OntClass;
@@ -59,6 +61,7 @@ class BasicContextBuilder implements ContextBuilder {
 		// 3. Añade el resultado definiendo el xontex de un OP
 		partialContextsJson.addAll(dpsContext);
 		partialContextsJson.addAll(opsContext);
+
 		partialContextsJson.parallelStream().flatMap(elem -> elem.entrySet().stream())
 				.forEach(entry -> partialContext.add(entry.getKey(), entry.getValue()));
 		if (configuration.getBase() != null)
@@ -95,9 +98,13 @@ class BasicContextBuilder implements ContextBuilder {
 	}
 
 	protected List<JsonObject> toDatatypePartialContext(OntologyHandler handler, OntClass node) {
-		return handler.getDatatypeProperties(node, configuration.isTraverseParents()).entrySet().parallelStream().map(
-				entry -> mapDatatypePropertyToContext(handler.getOntologyModel(), entry.getKey(), entry.getValue()))
-				.toList();
+		Stream<Map.Entry<Resource, String>> x_task = handler.getDatatypeProperties(node, configuration.isTraverseParents())
+				.entrySet()
+				.parallelStream();
+				//.map(entry -> mapDatatypePropertyToContext(handler.getOntologyModel(), entry.getKey(), entry.getValue()));
+
+		Stream<JsonObject> y_task = x_task.map(entry -> mapDatatypePropertyToContext(handler.getOntologyModel(), entry.getKey(), entry.getValue()));
+		return y_task.collect(Collectors.toList());
 	}
 
 	protected JsonObject mapDatatypePropertyToContext(OntModel model, Resource dataProperty, String datatype) {
@@ -115,6 +122,7 @@ class BasicContextBuilder implements ContextBuilder {
 
 	protected String extractLabel(OntModel model, Resource dataProperty) {
 		String label = dataProperty.getLocalName();
+		System.out.println(label);
 		Optional<String> labelOpt = null;
 		if (configuration.getPrefLabel() != null) {
 			labelOpt = model.listObjectsOfProperty(dataProperty, configuration.getPrefLabel()).toList().parallelStream()

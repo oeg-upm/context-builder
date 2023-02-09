@@ -1,0 +1,29 @@
+<div class="row dt-row">
+    <div class="col-sm-12">
+        <table class="table table-bordered table-striped table-vcenter js-dataTable-full dataTable no-footer" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr>
+                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+            </tr>
+            </thead>
+            <tbody>
+                #foreach($class in $classes)
+                <tr>
+                    <td class="fw-semibold">
+
+                        <h4 style="margin-block-end:0px">$class.getLocalName()</h4>
+                        <a class="d-none d-sm-table-cell" href="$class.getURI()">
+                            <span class="badge bg-info">$class.getURI()</span>
+                        </a>
+
+                    </td>
+                </tr>
+                #end
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
